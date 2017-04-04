@@ -1,0 +1,5 @@
+# Don't need to include unit tests
+test
+
+# Code coverage test output
+coverage

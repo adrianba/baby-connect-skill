@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Baby Connect for Alexa - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body style="margin:20px">
+
+<div class="panel panel-default" style="max-width: 600px">
+  <div class="panel-heading">
+    <h3 class="panel-title">Baby Connect for Alexa</h3>
+  </div>
+  <div class="panel-body">
+    <form method="POST" action="/babyconnect/auth">
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password</label>
+        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" required>
+    </div>
+    <div class="form-group">
+        <label for="tz">Time zone</label>
+        <select class="form-control" id="tz" name="tz" required>
+            <option value="US/Eastern">Eastern</option>
+            <option value="US/Central">Central</option>
+            <option value="US/Mountain">Mountain</option>
+            <option value="US/Arizona">Arizona</option>
+            <option value="US/Pacific">Pacific</option>
+            <option value="US/Alaska">Alaska</option>
+            <option value="US/Hawaii">Hawaii</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-default">Login</button>
+    <input type="hidden" id="state" name="state">
+    <input type="hidden" id="redirect_uri" name="redirect_uri">
+    </form>
+  </div>
+</div>
+
+<script>
+    function getDefaultTimezone() {
+        tmSummer = new Date(Date.UTC(2005, 6, 30, 0, 0, 0, 0));
+        so = -1 * tmSummer.getTimezoneOffset();
+        tmWinter = new Date(Date.UTC(2005, 12, 30, 0, 0, 0, 0));
+        wo = -1 * tmWinter.getTimezoneOffset();
+
+        if (-480 === so && -540 === wo) return 'US/Alaska';
+        if (-420 === so && -480 === wo) return 'US/Pacific';
+        if (-420 === so && -420 === wo) return 'US/Arizona';
+        if (-360 === so && -420 === wo) return 'US/Mountain';
+        if (-300 === so && -360 === wo) return 'US/Central';
+        if (-240 === so && -300 === wo) return 'US/Eastern';
+        return 'US/Pacific';
+    }
+
+    function getQueryVars() {
+        var vars = window.location.search.substring(1).split('&');
+        var o = {};
+        for(var i=0; i<vars.length; i++) {
+            var pair = vars[i].split('=');
+            o[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        }
+        return o;
+    }
+
+    function setTZ(v) {
+        var s = document.getElementById("tz");
+        for(var i=0; i<s.options.length; i++) {
+            if(s.options[i].value==v) {
+                s.options[i].selected = true;
+                return;
+            }
+        }
+    }
+
+    var v = getQueryVars();
+    document.getElementById("state").value = v['state'];
+    document.getElementById("redirect_uri").value = v['redirect_uri'];
+    setTZ(getDefaultTimezone());
+    document.getElementById("email").focus();
+</script>
+</body>
+</html>

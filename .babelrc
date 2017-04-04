@@ -1,0 +1,8 @@
+/*
+ * Babel is only used for code coverage testing with Istanbul.
+ */
+{
+  "presets": [
+    "es2017"
+  ]
+}
