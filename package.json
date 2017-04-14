@@ -11,7 +11,8 @@
     "intents": "node scripts/intents",
     "utterances": "node scripts/utterances",
     "test": "mocha",
-    "coverage": "babel-node node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
+    "test-coverage": "babel-node node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "babel-istanbul": "^0.12.2",
     "babel-preset-es2017": "^6.22.0",
     "black-hole-stream": "0.0.1",
+    "coveralls": "^2.13.0",
     "mocha": "^3.2.0",
     "nock": "^9.0.11",
     "timezonecomplete": "^5.4.4"
